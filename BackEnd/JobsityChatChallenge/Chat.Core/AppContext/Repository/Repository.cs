@@ -81,7 +81,7 @@ namespace Chat.Core.AppContext.Repository
             Context.Entry(entity).State = EntityState.Modified;
             Save();
         }
-        public void Delete(int id)
+        public void Delete(long id)
         {
             T entityToDelete = DbSet.Find(id);
             if (Context.Entry(entityToDelete).State == EntityState.Detached)

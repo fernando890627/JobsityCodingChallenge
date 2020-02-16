@@ -13,20 +13,16 @@ namespace Chat.StockBot.StockBot
 {
     public class StockBotService: IStockBotService
     {
-        public async Task<StokBotResult> GetStock(string stockName)
+        public async Task<StokBotResult> GetStock(string name)
         {
-            HttpClient client = new HttpClient();
-
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(
+            HttpClient httpClient = new HttpClient();
+            httpClient.DefaultRequestHeaders.Accept.Clear();
+            httpClient.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json"));
-            client.DefaultRequestHeaders.Add("User-Agent", ".NET Foundation Repository Reporter");
-
-            var stringResult = await client
-                .GetStringAsync($"https://stooq.com/q/l/?s=" + stockName + "&f=sd2t2ohlcv&h&e=JSON");
-
-            SymbolsStokBotReslt result = JsonConvert.DeserializeObject<SymbolsStokBotReslt>(stringResult);
-
+            //httpClient.DefaultRequestHeaders.Add("User-Agent", ".NET Foundation Repository Reporter");
+            var strResult = await httpClient
+                .GetStringAsync($"https://stooq.com/q/l/?s=" + name + "&f=sd2t2ohlcv&h&e=JSON");
+            SymbolsStokBotReslt result = JsonConvert.DeserializeObject<SymbolsStokBotReslt>(strResult);
             return result.Symbols.First();
         }
     }

@@ -11,5 +11,8 @@ namespace Chat.Core.IService
     {
         Task<bool> Create(ChatRoom data);
         Task<List<ChatRoom>> GetChatRooms();
+        Task<BaseDto> JoinToChat(long chatId, string userName);
+        Task<BaseDto> LeaveChat(long chatId, string userName);
+        Task<List<MessageDto>> GetChatRoomMessage(long id);
     }
 }

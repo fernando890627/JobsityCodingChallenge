@@ -20,6 +20,7 @@ namespace Chat.Core.AppContext
         }
         public DbSet<Message> Message { get; set; }
         public DbSet<ChatRoom> Chatrooms { get; set; }
+        public DbSet<UsersChatRoom> UsersChatRoom { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

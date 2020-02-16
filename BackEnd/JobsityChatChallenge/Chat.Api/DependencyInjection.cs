@@ -2,7 +2,7 @@
 using Chat.Core.Auth;
 using Chat.Core.IService;
 using Chat.Service;
-using Chat.Service.Hubs;
+using Chat.Api.Hubs;
 using Chat.StockBot.IStockBot;
 using Chat.StockBot.StockBot;
 using Microsoft.Extensions.Configuration;

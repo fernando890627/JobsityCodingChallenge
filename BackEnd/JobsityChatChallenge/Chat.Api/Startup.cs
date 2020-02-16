@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using AutoMapper;
 using Chat.Api.ActionFilters;
+using Chat.Api.Hubs;
 using Chat.Api.Mappings;
 using Chat.Core.AppContext;
 using Chat.Core.Entity;
@@ -30,6 +31,13 @@ namespace Chat.Api
         public IConfiguration Configuration { get; }
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(o => o.AddPolicy("MyPolicy", builder =>
+            {
+                builder.AllowAnyHeader()
+                .AllowAnyMethod()
+                .SetIsOriginAllowed((host) => true)
+                .AllowCredentials();
+            }));
             AddDependencies(services);
             services.AddControllers(options => options.EnableEndpointRouting = false);
             AddSwagger(services);
@@ -45,14 +53,16 @@ namespace Chat.Api
             {
                 cfg.AddProfile(new MappingProfile());
             }).CreateMapper());
+            services.AddSignalR();
         }
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseCors("MyPolicy");
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
-            app.UseAuthentication();
+            
             //app.UseMvc(option=> option.EnableEndpointRouting = false).AddNewtonsoftJson();
             app.UseHttpsRedirection();
             app.UseSwagger();
@@ -60,13 +70,14 @@ namespace Chat.Api
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "Api API V1");
             });
+            app.UseRouting();
+            app.UseAuthentication();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapHub<ChatHub>("api/chat");
+            });
             app.UseMvc();
-            //app.UseRouting();
-
-            //app.UseEndpoints(endpoints =>
-            //{
-            //    endpoints.MapControllers();
-            //});
+            
         }
         private void AddSwagger(IServiceCollection services)
         {
