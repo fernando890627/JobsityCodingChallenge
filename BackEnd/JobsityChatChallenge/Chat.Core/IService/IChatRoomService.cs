@@ -1,0 +1,15 @@
+﻿using Chat.Core.DTO;
+using Chat.Core.Entity;
+using System;
+using System.Collections.Generic;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Chat.Core.IService
+{
+    public interface IChatRoomService
+    {
+        Task<bool> Create(ChatRoom data);
+        Task<List<ChatRoom>> GetChatRooms();
+    }
+}
