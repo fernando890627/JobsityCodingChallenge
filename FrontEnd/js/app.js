@@ -22,7 +22,28 @@ function init()
 function setButtonActions()
 {
 	$('#btnRegister').click(function() {
-		
+		var name = $("#firstName").val();
+		var lastName = $("#lastName").val();
+		var email = $("#email").val();
+		var password = $("#registerPass").val();		
+		$.ajax({
+			type: "POST",
+			url: urlBase + "auth/register",
+			data: JSON.stringify({
+				firstName: name,
+				lastName: lastName,
+				email: email,
+				password: password
+			}),
+			contentType: "application/json; charset=utf-8",
+			dataType: "json",
+			success: function (response) {
+				setResponseMessage(response);
+			},
+			fail: function(xhr, textStatus, errorThrown){
+				alert('request failed');
+			}
+		});
 	});
 	$("#btnlogin").click(function(){
 		var username = $("#userName").val();
@@ -180,6 +201,11 @@ var Connect = function(){
             });
 	
 }
+
+function setResponseMessage(response){
+	$('#responseMessage').text(response.message);
+}
+
 function parseJwt (token) {
     var base64Url = token.split('.')[1];
     var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
