@@ -30,16 +30,9 @@ namespace Chat.Api.Controllers
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
+            if(credentials==null)
+                return BadRequest("Null parameter");
             var result = await _authService.Login(credentials);
-            return Ok(result);
-        }
-
-        [HttpGet("Logout")]
-        [Authorize]
-        [SwaggerResponse(200, Type = typeof(bool))]
-        public async Task<IActionResult> Logout()
-        {
-            var result = await _authService.LogOut();
             return Ok(result);
         }
         [HttpPost("Register")]
@@ -50,6 +43,8 @@ namespace Chat.Api.Controllers
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
+            if (data == null)
+                return BadRequest("Null parameter");
             var result = await _authService.Register(data);
             return Ok(result);
         }

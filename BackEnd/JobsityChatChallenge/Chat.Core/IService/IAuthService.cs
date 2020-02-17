@@ -11,6 +11,5 @@ namespace Chat.Core.IService
     {
         Task<JsonTokenDto> Login(LoginDto creedentials);
         Task<NewUserResponseDto> Register(NewUserRequestDto data);
-        Task<bool> LogOut();
     }
 }

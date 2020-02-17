@@ -61,31 +61,8 @@ namespace Chat.Service
             };
         }
 
-        public async Task<BaseDto> LeaveChat(long chatId,string userName)
-        {
-            var user = await _userManager.FindByEmailAsync(userName);
-            var userChat = _usersChatRoomRepository.Get(c => c.ChatroomId == chatId
-                                            && c.ApplicationUserId == user.Id)
-                                                .FirstOrDefault();
-            var data = new UsersChatRoom { ChatroomId = chatId, ApplicationUserId = user.Id };
-            if (userChat == null)
-            {
-                return new BaseDto
-                {
-                    HasError = true,
-                    Message = "Not found"
-                };
-            }
-            _usersChatRoomRepository.Delete(data.ChatroomId);
-            return new BaseDto
-            {
-                HasError = false,
-                Message = "You have left the chat room successfuly"
-            };
-        }
-
         public async Task<List<MessageDto>> GetChatRoomMessage(long id)
-        {//includes: m => m.SenderUser
+        {
             var chatRoomMessages = _messageRepository.Get(filter: c => c.ChatroomId == id,
                 orderBy: o => o.OrderByDescending(or => or.SendDate)               
                 ).Take(50).Select(r=>new MessageDto 

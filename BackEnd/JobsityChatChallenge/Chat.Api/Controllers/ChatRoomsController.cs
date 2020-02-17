@@ -55,19 +55,6 @@ namespace Chat.Api.Controllers
             var result = await _chatRooms.JoinToChat(data.ChatroomId, userName);
             return Ok(result);
         }
-
-        [HttpPost("LeaveChat")]
-        [Authorize]
-        [SwaggerResponse(200, Type = typeof(bool))]
-        public async Task<IActionResult> LeaveChat([FromBody] UsersChatRoom data)
-        {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-            var userName = User.Identity.Name;
-            var result = await _chatRooms.LeaveChat(data.ChatroomId, userName);
-            return Ok(result);
-        }
-
         [HttpGet("GetChatRoomMessage")]
         [Authorize]
         [SwaggerResponse(200, Type = typeof(MessageDto))]

@@ -11,6 +11,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chat.Service", "Chat.Servic
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Chat.StockBot", "Chat.StockBot\Chat.StockBot.csproj", "{ADD5B37F-CEA0-424B-9CF6-D4ABEDBED93C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "JobsityChatTest", "JobsityChatTest\JobsityChatTest.csproj", "{084856A9-C851-4DC1-AB8A-338FF7FE5118}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{ADD5B37F-CEA0-424B-9CF6-D4ABEDBED93C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{ADD5B37F-CEA0-424B-9CF6-D4ABEDBED93C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{ADD5B37F-CEA0-424B-9CF6-D4ABEDBED93C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{084856A9-C851-4DC1-AB8A-338FF7FE5118}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{084856A9-C851-4DC1-AB8A-338FF7FE5118}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{084856A9-C851-4DC1-AB8A-338FF7FE5118}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{084856A9-C851-4DC1-AB8A-338FF7FE5118}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

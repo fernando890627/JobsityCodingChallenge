@@ -160,6 +160,7 @@ var Connect = function(){
 					var liElement = document.createElement('li');
 					liElement.innerHTML = '<strong>' + encodedName + '</strong>:&nbsp;&nbsp;' + encodedMsg;
 					document.getElementById('messages').appendChild(liElement);
+					$('#messages').animate({scrollTop: $('#messages').prop("scrollHeight")}, 500);
 				}				
             });
             connection.start()

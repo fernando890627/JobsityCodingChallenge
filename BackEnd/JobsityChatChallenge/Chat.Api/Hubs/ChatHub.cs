@@ -37,9 +37,9 @@ namespace Chat.Api.Hubs
                 SenderUserId = user!=null?user.Id:0
 
             };
-            if (text.Contains("/stock_code="))
+            if (text.Contains("/stock="))
             {
-                text = text.Replace("/stock_code=", "");
+                text = text.Replace("/stock=", "");
                 var response = await _stockBotService.GetStock(text.ToString());
                 if (response != null)
                 {

@@ -14,21 +14,18 @@ namespace Chat.Service
 {
     public class AuthService : IAuthService
     {
-        protected readonly UserManager<ApplicationUser> _userManager;
+        private readonly UserManager<ApplicationUser> _userManager;
         private readonly IMapper _mapper;
         private readonly ITokenService _tokenService;
-        private readonly SignInManager<ApplicationUser> _signInManager;
 
         public AuthService(UserManager<ApplicationUser> userManager,
             ITokenService tokenService,
-            IMapper mapper,
-            SignInManager<ApplicationUser> signInManager
+            IMapper mapper
             )
         {
             _mapper = mapper;
             _userManager = userManager;
             _tokenService = tokenService;
-            _signInManager = signInManager;
         }
         public async Task<JsonTokenDto> Login(LoginDto creedentials)
         {
@@ -95,12 +92,6 @@ namespace Chat.Service
                     Message = "An error ocurred"
                 };
             }
-        }
-
-        public async Task<bool> LogOut()
-        {
-            await _signInManager.SignOutAsync();
-            return true;
         }
     }
 }
