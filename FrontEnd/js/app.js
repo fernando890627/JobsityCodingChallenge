@@ -202,6 +202,8 @@ var Connect = function(){
                 .then(function () {										
                     document.getElementById('send').addEventListener('click', function (event) {
 						var messageBody = $('#message').val();
+						if(!messageBody)
+							return;
 						var user = parseJwt(authToken);
                         connection.invoke('send', parseFloat(chatroomId),messageBody,user.unique_name);
                         messageInput.value = '';
