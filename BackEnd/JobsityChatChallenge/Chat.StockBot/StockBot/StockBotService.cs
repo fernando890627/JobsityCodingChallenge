@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Chat.StockBot.StockBot
 {
-    public class StockBotService: IStockBotService
+    public class StockBotService : IStockBotService
     {
         public async Task<StokBotResult> GetStock(string name)
         {
@@ -22,8 +22,13 @@ namespace Chat.StockBot.StockBot
             //httpClient.DefaultRequestHeaders.Add("User-Agent", ".NET Foundation Repository Reporter");
             var strResult = await httpClient
                 .GetStringAsync($"https://stooq.com/q/l/?s=" + name + "&f=sd2t2ohlcv&h&e=JSON");
-            SymbolsStokBotReslt result = JsonConvert.DeserializeObject<SymbolsStokBotReslt>(strResult);
-            return result.Symbols.First();
+            SymbolsStokBotReslt result;
+            if (strResult.Contains("N/D"))
+                result = null;
+            else
+                result = JsonConvert.DeserializeObject<SymbolsStokBotReslt>(strResult);
+            
+            return result?.Symbols.First();
         }
     }
 }

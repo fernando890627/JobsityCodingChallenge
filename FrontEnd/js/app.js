@@ -58,8 +58,15 @@ function setButtonActions()
 			contentType: "application/json; charset=utf-8",
 			dataType: "json",
 			success: function (response) {
-				authToken = response.token;
-				ShowRoomsList();
+				
+				if(response.token){
+					authToken = response.token;
+					ShowRoomsList();
+				}else
+				{
+					setResponseMessage(response);
+				}
+				
 			},
 			fail: function(xhr, textStatus, errorThrown){
 				alert('request failed');
@@ -135,14 +142,17 @@ function toggleLogin(toggleLogin)
 	{
 		$('#registerSection').toggle();
 		$('#loginSection').toggle();
+		$("#responseMessage").text('');
 	}else
 	{
 		$('#loginSection').toggle();
 		$('#registerSection').toggle();
+		$("#responseMessage").text('');
 	}
 }
 
 function ShowRoomsList(){
+				$("#responseMessage").text('');
 				$("#loginSection").toggle()
 				GetChatrooms();
 				$('#createRoomSection').toggle();
@@ -181,6 +191,10 @@ var Connect = function(){
 					var liElement = document.createElement('li');
 					liElement.innerHTML = '<strong>' + encodedName + '</strong>:&nbsp;&nbsp;' + encodedMsg;
 					document.getElementById('messages').appendChild(liElement);
+					if($("#messages li").length>50)
+					{
+						$("#messages li")[0].remove();	
+					}
 					$('#messages').animate({scrollTop: $('#messages').prop("scrollHeight")}, 500);
 				}				
             });

@@ -34,22 +34,24 @@ namespace Chat.Api.Hubs
                 ChatroomId = chatRoomId,
                 MessageSent = messageBody,
                 SendDate = DateTime.Now,
-                SenderUserId = user!=null?user.Id:0
+                SenderUserId = user != null ? user.Id : 0
 
             };
+            await Clients.All.SendAsync(chatRoomId.ToString(), user?.UserName, message);
+            await Clients.Group(message.ChatroomId.ToString()).SendAsync($"User_{unique_name}", unique_name, messageBody);
             if (text.Contains("/stock="))
             {
                 text = text.Replace("/stock=", "");
                 var response = await _stockBotService.GetStock(text.ToString());
                 if (response != null)
                 {
-                    message.MessageSent = response.Symbol.ToUpper() + " quote is $" + response.Open + " per share.";
+                    message.MessageSent = $"{response.Symbol.ToUpper()} quote is $ {response.Open} per share.";
                     await Clients.All.SendAsync(chatRoomId.ToString(), "Bot_Stock", message);
                     await Clients.Group(message.ChatroomId.ToString()).SendAsync("Bot_Stock", messageBody);
                 }
                 else
                 {
-                    message.MessageSent = text.ToString() + " was not found";
+                    message.MessageSent = $"{text.ToString()} not found";
                     await Clients.All.SendAsync(chatRoomId.ToString(), "Bot_Stock", message);
                     await Clients.Group(message.ChatroomId.ToString()).SendAsync("OnMetadataMessage", messageBody);
                 }
@@ -57,8 +59,6 @@ namespace Chat.Api.Hubs
             else
             {
                 _messageRepository.Add(message);
-                await Clients.All.SendAsync(chatRoomId.ToString(), user?.UserName, message);
-                await Clients.Group(message.ChatroomId.ToString()).SendAsync($"User_{unique_name}", unique_name, messageBody);
             }
         }
 

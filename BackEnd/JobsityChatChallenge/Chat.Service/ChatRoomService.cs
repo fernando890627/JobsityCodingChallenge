@@ -64,7 +64,7 @@ namespace Chat.Service
         public async Task<List<MessageDto>> GetChatRoomMessage(long id)
         {
             var chatRoomMessages = _messageRepository.Get(filter: c => c.ChatroomId == id,
-                orderBy: o => o.OrderByDescending(or => or.SendDate)               
+                orderBy: o => o.OrderBy(or => or.SendDate)               
                 ).Take(50).Select(r=>new MessageDto 
                 {
                     Message=r.MessageSent,
